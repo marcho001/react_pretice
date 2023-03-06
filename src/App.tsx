@@ -1,7 +1,11 @@
-import { useState } from 'react'
-
+import React from 'react'
+import Todos from './pages/Todos/Index'
 function App() {
-  return <div className=""></div>
+  return (
+    <React.StrictMode>
+      <Todos />
+    </React.StrictMode>
+  )
 }
 
 export default App
