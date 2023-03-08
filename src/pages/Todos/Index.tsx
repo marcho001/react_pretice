@@ -3,18 +3,56 @@ import Header from './components/Header'
 import ToggleBtn from './components/ToggleBtn'
 import TodoItem from './components/TodoItem'
 import Footer from './components/Footer'
-import React, { useState } from 'react'
-
-import useTodoItem from './composables/useTodoItem'
+import React, { useMemo, useState } from 'react'
 import { v4 as uuidv4 } from 'uuid'
-
+interface TodoItem {
+  uuid: string
+  name: string
+  isChecked: boolean
+}
 export default function Todos() {
   const [newTodo, setNewTodo] = useState('')
-  const { todoList, addTodoItem, toggleTodoChecked, deleteTodo, updateTodo, toggleAllTodo } =
-    useTodoItem()
-
+  const [todoList, setTodoList] = useState<TodoItem[]>([])
   const [editingUuid, setEditingUuid] = useState('')
   const [editContent, setEditContent] = useState('')
+
+  const addTodoItem = (data: TodoItem) => {
+    setTodoList([...todoList, data])
+  }
+  const toggleTodoChecked = (uuid: string) => {
+    setTodoList(
+      todoList.map(item => {
+        if (item.uuid === uuid) {
+          item.isChecked = !item.isChecked
+        }
+        return item
+      })
+    )
+  }
+
+  const deleteTodo = (uuid: string) => {
+    setTodoList(todoList.filter(item => item.uuid !== uuid))
+  }
+
+  const updateTodo = (uuid: string, content: string) => {
+    setTodoList(
+      todoList.filter(item => {
+        if (item.uuid === uuid) {
+          item.name = content
+        }
+        return item
+      })
+    )
+  }
+  const toggleAllTodo = (isChecked: boolean) => {
+    setTodoList(
+      todoList.map(item => {
+        item.isChecked = isChecked
+        return item
+      })
+    )
+  }
+
   const setEditingTodo = (uuid: string, content: string) => {
     setEditingUuid(uuid)
     setEditContent(content)
@@ -30,6 +68,26 @@ export default function Todos() {
     setEditingTodo('', '')
   }
 
+  const handleClearComplete = () => {
+    setTodoList(todoList.filter(item => !item.isChecked))
+  }
+
+  const [displayState, setDisplayState] = useState('all')
+  const todoDisPlay = useMemo(() => {
+    console.log('compute')
+    if (displayState === 'all') {
+      return todoList
+    }
+    if (displayState === 'active') {
+      return todoList.filter(item => !item.isChecked)
+    }
+
+    return todoList.filter(item => item.isChecked)
+  }, [displayState, todoList])
+
+  const sumTotalLefts = useMemo(() => {
+    return todoList.filter(item => !item.isChecked).length
+  }, [todoList])
   return (
     <div className="">
       <section className="todoapp">
@@ -38,7 +96,7 @@ export default function Todos() {
         <section className="main">
           <ToggleBtn handleToggleAll={toggleAllTodo} />
           <ul className="todo-list">
-            {todoList.map(item => (
+            {todoDisPlay.map(item => (
               <TodoItem
                 key={item.uuid}
                 todoUuid={item.uuid}
@@ -58,24 +116,42 @@ export default function Todos() {
 
         <footer className="footer">
           <span className="todo-count">
-            <strong>0</strong> item left
+            <strong>{sumTotalLefts}</strong> item left{sumTotalLefts > 1 && 's'}
           </span>
 
           <ul className="filters">
             <li>
-              <a className="selected" href="#/">
+              <a
+                className={displayState === 'all' ? 'selected' : ''}
+                href="#/"
+                onClick={() => setDisplayState('all')}
+              >
                 All
               </a>
             </li>
             <li>
-              <a href="#/active">Active</a>
+              <a
+                className={displayState === 'active' ? 'selected' : ''}
+                href="#/active"
+                onClick={() => setDisplayState('active')}
+              >
+                Active
+              </a>
             </li>
             <li>
-              <a href="#/completed">Completed</a>
+              <a
+                className={displayState === 'completed' ? 'selected' : ''}
+                href="#/completed"
+                onClick={() => setDisplayState('completed')}
+              >
+                Completed
+              </a>
             </li>
           </ul>
 
-          <button className="clear-completed">Clear completed</button>
+          <button className="clear-completed" onClick={handleClearComplete}>
+            Clear completed
+          </button>
         </footer>
       </section>
       <Footer />
