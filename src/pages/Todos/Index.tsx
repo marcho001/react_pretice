@@ -10,7 +10,8 @@ import { v4 as uuidv4 } from 'uuid'
 
 export default function Todos() {
   const [newTodo, setNewTodo] = useState('')
-  const { todoList, addTodoItem, toggleTodoChecked, deleteTodo, updateTodo } = useTodoItem()
+  const { todoList, addTodoItem, toggleTodoChecked, deleteTodo, updateTodo, toggleAllTodo } =
+    useTodoItem()
 
   const [editingUuid, setEditingUuid] = useState('')
   const [editContent, setEditContent] = useState('')
@@ -35,7 +36,7 @@ export default function Todos() {
         <Header newTodo={newTodo} onNewTodoChange={setNewTodo} onSubmit={addTodo} />
 
         <section className="main">
-          <ToggleBtn />
+          <ToggleBtn handleToggleAll={toggleAllTodo} />
           <ul className="todo-list">
             {todoList.map(item => (
               <TodoItem
@@ -52,23 +53,6 @@ export default function Todos() {
                 handleUpdateTodo={handleUpdateTodo}
               />
             ))}
-
-            {/* <li className="completed">
-              <div className="view">
-                <input className="toggle" type="checkbox" checked />
-                <label>Taste JavaScript</label>
-                <button className="destroy"></button>
-              </div>
-              <input className="edit" value="Create a TodoMVC template" />
-            </li>
-            <li>
-              <div className="view">
-                <input className="toggle" type="checkbox" />
-                <label>Buy a unicorn</label>
-                <button className="destroy"></button>
-              </div>
-              <input className="edit" value="Rule the web" />
-            </li> */}
           </ul>
         </section>
 

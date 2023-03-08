@@ -36,6 +36,14 @@ export default function useTodoItem() {
       })
     )
   }
+  const toggleAllTodo = (isChecked: boolean) => {
+    setTodoList(
+      todoList.map(item => {
+        item.isChecked = isChecked
+        return item
+      })
+    )
+  }
 
-  return { todoList, addTodoItem, toggleTodoChecked, deleteTodo, updateTodo }
+  return { todoList, addTodoItem, toggleTodoChecked, deleteTodo, updateTodo, toggleAllTodo }
 }
