@@ -26,5 +26,16 @@ export default function useTodoItem() {
     setTodoList(todoList.filter(item => item.uuid !== uuid))
   }
 
-  return { todoList, addTodoItem, toggleTodoChecked, deleteTodo }
+  const updateTodo = (uuid: string, content: string) => {
+    setTodoList(
+      todoList.filter(item => {
+        if (item.uuid === uuid) {
+          item.name = content
+        }
+        return item
+      })
+    )
+  }
+
+  return { todoList, addTodoItem, toggleTodoChecked, deleteTodo, updateTodo }
 }

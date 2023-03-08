@@ -7,16 +7,26 @@ import React, { useState } from 'react'
 
 import useTodoItem from './composables/useTodoItem'
 import { v4 as uuidv4 } from 'uuid'
-import useEditTodo from './composables/useEditTodo'
 
 export default function Todos() {
   const [newTodo, setNewTodo] = useState('')
-  const { todoList, addTodoItem, toggleTodoChecked, deleteTodo } = useTodoItem()
-  const { editingUuid, setEditingTodo, editContent, setEditContent } = useEditTodo()
+  const { todoList, addTodoItem, toggleTodoChecked, deleteTodo, updateTodo } = useTodoItem()
+
+  const [editingUuid, setEditingUuid] = useState('')
+  const [editContent, setEditContent] = useState('')
+  const setEditingTodo = (uuid: string, content: string) => {
+    setEditingUuid(uuid)
+    setEditContent(content)
+  }
 
   const addTodo = () => {
     addTodoItem({ uuid: uuidv4(), name: newTodo, isChecked: false })
     setNewTodo('')
+  }
+  const handleUpdateTodo = (e: React.KeyboardEvent, uuid: string, content: string) => {
+    if (e.key !== 'Enter' || !content) return
+    updateTodo(uuid, content)
+    setEditingTodo('', '')
   }
 
   return (
@@ -39,6 +49,7 @@ export default function Todos() {
                 handleDeleteTodo={deleteTodo}
                 handleSetEditingUuid={setEditingTodo}
                 handleEditInputChange={setEditContent}
+                handleUpdateTodo={handleUpdateTodo}
               />
             ))}
 

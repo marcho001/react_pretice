@@ -1,5 +1,3 @@
-import { useState } from 'react'
-
 type TodoItemProps = {
   todoUuid: string
   todoName: string
@@ -10,6 +8,7 @@ type TodoItemProps = {
   handleDeleteTodo: (uuid: string) => void
   handleSetEditingUuid: (uuid: string, content: string) => void
   handleEditInputChange: React.Dispatch<React.SetStateAction<string>>
+  handleUpdateTodo: (e: React.KeyboardEvent, uuid: string, content: string) => void
 }
 export default function TodoItem({
   todoUuid,
@@ -20,7 +19,8 @@ export default function TodoItem({
   handleToggleChecked,
   handleDeleteTodo,
   handleSetEditingUuid,
-  handleEditInputChange
+  handleEditInputChange,
+  handleUpdateTodo
 }: TodoItemProps) {
   const todoItemClassName = `
   ${isChecked ? 'completed' : ''}
@@ -46,6 +46,7 @@ export default function TodoItem({
         className="edit"
         value={editingContent}
         onChange={e => handleEditInputChange(e.target.value)}
+        onKeyDown={e => handleUpdateTodo(e, todoUuid, editingContent)}
       />
     </li>
   )
