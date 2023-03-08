@@ -5,15 +5,17 @@ import TodoItem from './components/TodoItem'
 import Footer from './components/Footer'
 import React, { useState } from 'react'
 
-interface TodoItem {
-  name: string
-}
-export default function Todos(props) {
+import useTodoItem from './composables/useTodoItem'
+import { v4 as uuidv4 } from 'uuid'
+import useEditTodo from './composables/useEditTodo'
+
+export default function Todos() {
   const [newTodo, setNewTodo] = useState('')
-  const [todoList, setTodoList] = useState<TodoItem[]>([])
+  const { todoList, addTodoItem, toggleTodoChecked, deleteTodo } = useTodoItem()
+  const { editingUuid, setEditingTodo, editContent, setEditContent } = useEditTodo()
 
   const addTodo = () => {
-    setTodoList([...todoList, { name: newTodo }])
+    addTodoItem({ uuid: uuidv4(), name: newTodo, isChecked: false })
     setNewTodo('')
   }
 
@@ -25,7 +27,21 @@ export default function Todos(props) {
         <section className="main">
           <ToggleBtn />
           <ul className="todo-list">
-            <TodoItem />
+            {todoList.map(item => (
+              <TodoItem
+                key={item.uuid}
+                todoUuid={item.uuid}
+                todoName={item.name}
+                isChecked={item.isChecked}
+                editingUuid={editingUuid}
+                editingContent={editContent}
+                handleToggleChecked={toggleTodoChecked}
+                handleDeleteTodo={deleteTodo}
+                handleSetEditingUuid={setEditingTodo}
+                handleEditInputChange={setEditContent}
+              />
+            ))}
+
             {/* <li className="completed">
               <div className="view">
                 <input className="toggle" type="checkbox" checked />

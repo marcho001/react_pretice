@@ -1,12 +1,52 @@
-export default function TodoItem(params) {
+import { useState } from 'react'
+
+type TodoItemProps = {
+  todoUuid: string
+  todoName: string
+  isChecked: boolean
+  editingUuid: string
+  editingContent: string
+  handleToggleChecked: (uuid: string) => void
+  handleDeleteTodo: (uuid: string) => void
+  handleSetEditingUuid: (uuid: string, content: string) => void
+  handleEditInputChange: React.Dispatch<React.SetStateAction<string>>
+}
+export default function TodoItem({
+  todoUuid,
+  todoName,
+  isChecked,
+  editingUuid,
+  editingContent,
+  handleToggleChecked,
+  handleDeleteTodo,
+  handleSetEditingUuid,
+  handleEditInputChange
+}: TodoItemProps) {
+  const todoItemClassName = `
+  ${isChecked ? 'completed' : ''}
+  ${editingUuid === todoUuid ? 'editing' : ''}
+  `
+
   return (
-    <li className="completed">
+    <li
+      className={todoItemClassName}
+      onDoubleClick={() => handleSetEditingUuid(todoUuid, todoName)}
+    >
       <div className="view">
-        <input className="toggle" type="checkbox" />
-        <label>Taste JavaScript</label>
-        <button className="destroy"></button>
+        <input
+          className="toggle"
+          type="checkbox"
+          checked={isChecked}
+          onChange={() => handleToggleChecked(todoUuid)}
+        />
+        <label>{todoName}</label>
+        <button className="destroy" onClick={() => handleDeleteTodo(todoUuid)}></button>
       </div>
-      <input className="edit" />
+      <input
+        className="edit"
+        value={editingContent}
+        onChange={e => handleEditInputChange(e.target.value)}
+      />
     </li>
   )
 }
