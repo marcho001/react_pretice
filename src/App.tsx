@@ -1,9 +1,11 @@
 import React from 'react'
-import Todos from './pages/Todos/Index'
+import { RouterProvider } from 'react-router-dom'
+import router from './router/index'
+
 function App() {
   return (
     <React.StrictMode>
-      <Todos />
+      <RouterProvider router={router}></RouterProvider>
     </React.StrictMode>
   )
 }

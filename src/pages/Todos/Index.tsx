@@ -89,13 +89,13 @@ export default function Todos() {
     return todoList.filter(item => !item.isChecked).length
   }, [todoList])
   return (
-    <div className="">
-      <section className="todoapp">
+    <div className=''>
+      <section className='todoapp'>
         <Header newTodo={newTodo} onNewTodoChange={setNewTodo} onSubmit={addTodo} />
 
-        <section className="main">
+        <section className='main'>
           <ToggleBtn handleToggleAll={toggleAllTodo} />
-          <ul className="todo-list">
+          <ul className='todo-list'>
             {todoDisPlay.map(item => (
               <TodoItem
                 key={item.uuid}
@@ -114,25 +114,21 @@ export default function Todos() {
           </ul>
         </section>
 
-        <footer className="footer">
-          <span className="todo-count">
+        <footer className='footer h-6'>
+          <span className='todo-count'>
             <strong>{sumTotalLefts}</strong> item left{sumTotalLefts > 1 && 's'}
           </span>
 
-          <ul className="filters">
+          <ul className='filters'>
             <li>
-              <a
-                className={displayState === 'all' ? 'selected' : ''}
-                href="#/"
-                onClick={() => setDisplayState('all')}
-              >
+              <a className={displayState === 'all' ? 'selected' : ''} href='#/' onClick={() => setDisplayState('all')}>
                 All
               </a>
             </li>
             <li>
               <a
                 className={displayState === 'active' ? 'selected' : ''}
-                href="#/active"
+                href='#/active'
                 onClick={() => setDisplayState('active')}
               >
                 Active
@@ -141,7 +137,7 @@ export default function Todos() {
             <li>
               <a
                 className={displayState === 'completed' ? 'selected' : ''}
-                href="#/completed"
+                href='#/completed'
                 onClick={() => setDisplayState('completed')}
               >
                 Completed
@@ -149,7 +145,7 @@ export default function Todos() {
             </li>
           </ul>
 
-          <button className="clear-completed" onClick={handleClearComplete}>
+          <button className='clear-completed' onClick={handleClearComplete}>
             Clear completed
           </button>
         </footer>
