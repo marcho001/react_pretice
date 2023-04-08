@@ -9,6 +9,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@types/react-router-dom": "^5.3.3",
     "@types/uuid": "^9.0.1",
     "localforage": "^1.10.0",
     "match-sorter": "^6.3.1",
