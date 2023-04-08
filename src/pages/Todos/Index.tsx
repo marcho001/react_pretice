@@ -1,4 +1,4 @@
-import 'todomvc-app-css/index.css'
+import '../../assets/css/todomvc.css'
 import Header from './components/Header'
 import ToggleBtn from './components/ToggleBtn'
 import TodoItem from './components/TodoItem'
@@ -74,7 +74,6 @@ export default function Todos() {
 
   const [displayState, setDisplayState] = useState('all')
   const todoDisPlay = useMemo(() => {
-    console.log('compute')
     if (displayState === 'all') {
       return todoList
     }
@@ -89,7 +88,7 @@ export default function Todos() {
     return todoList.filter(item => !item.isChecked).length
   }, [todoList])
   return (
-    <div className=''>
+    <div className='max-w-[580px] m-auto pt-32'>
       <section className='todoapp'>
         <Header newTodo={newTodo} onNewTodoChange={setNewTodo} onSubmit={addTodo} />
 
@@ -114,7 +113,7 @@ export default function Todos() {
           </ul>
         </section>
 
-        <footer className='footer h-6'>
+        <footer className='footer h-12'>
           <span className='todo-count'>
             <strong>{sumTotalLefts}</strong> item left{sumTotalLefts > 1 && 's'}
           </span>

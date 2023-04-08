@@ -15,11 +15,11 @@ export default function Header({ newTodo, onNewTodoChange, onSubmit }: HeaderPro
     onSubmit()
   }
   return (
-    <header className="header">
+    <header className='header pt-30'>
       <h1>todos</h1>
       <input
-        className="new-todo"
-        placeholder="What needs to be done?"
+        className='new-todo'
+        placeholder='What needs to be done?'
         value={newTodo}
         onChange={handleChange}
         onKeyDown={handleSubmit}
