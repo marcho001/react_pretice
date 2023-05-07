@@ -1,18 +1,9 @@
 import { useState } from 'react'
 
-interface ToggleBtnParams {
-  handleToggleAll: (isChecked: boolean) => void
-}
-
-export default function ToggleBtn({ handleToggleAll }: ToggleBtnParams) {
-  const [isToggle, setIsToggle] = useState(false)
-  const doToggle = () => {
-    setIsToggle(!isToggle)
-    handleToggleAll(isToggle)
-  }
+export default function ToggleBtn() {
   return (
     <>
-      <input id="toggle-all" className="toggle-all" type="checkbox" onChange={doToggle} />
+      <input id="toggle-all" className="toggle-all" type="checkbox" />
       <label htmlFor="toggle-all">Mark all as complete</label>
     </>
   )
