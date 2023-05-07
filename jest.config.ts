@@ -1,6 +1,6 @@
 export default {
   preset: 'ts-jest',
-  testEnvironment: 'node',
+  testEnvironment: 'jsdom',
   // testRegex: '(.*|(\\.|/)(test|spec))\\.tsx?$',
   transform: {
     '^.+\\.tsx?$': 'ts-jest'
