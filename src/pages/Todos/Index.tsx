@@ -22,6 +22,9 @@ export default function Todos() {
       })
     )
   }
+  const removeTodo = (id: string) => {
+    setTodos(todos.filter(item => item.id !== id))
+  }
   return (
     <div className="max-w-[580px] m-auto pt-32">
       <section className="todoapp">
@@ -31,7 +34,12 @@ export default function Todos() {
           <ToggleBtn />
           <ul className="todo-list">
             {todos.map(todo => (
-              <TodoItem key={todo.id} onToggleCompleted={toggleTodoCompleted} {...todo} />
+              <TodoItem
+                key={todo.id}
+                onToggleCompleted={toggleTodoCompleted}
+                onRemoveTodo={removeTodo}
+                {...todo}
+              />
             ))}
           </ul>
         </section>

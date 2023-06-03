@@ -1,8 +1,15 @@
 interface Props extends Todo {
   onToggleCompleted: (id: string) => void
+  onRemoveTodo: (id: string) => void
 }
 
-export default function TodoItem({ content, completed, id, onToggleCompleted }: Props) {
+export default function TodoItem({
+  content,
+  completed,
+  id,
+  onToggleCompleted,
+  onRemoveTodo
+}: Props) {
   // const todoItemClassName = `
   // ${isChecked ? 'completed' : ''}
   // ${editingUuid === todoUuid ? 'editing' : ''}
@@ -19,7 +26,7 @@ export default function TodoItem({ content, completed, id, onToggleCompleted }: 
           onChange={() => onToggleCompleted(id)}
         />
         <label>{content}</label>
-        <button className="destroy"></button>
+        <button className="destroy" onClick={() => onRemoveTodo(id)}></button>
       </div>
       {/* <input className="edit" /> */}
     </li>
