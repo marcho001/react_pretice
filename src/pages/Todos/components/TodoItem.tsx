@@ -1,4 +1,8 @@
-export default function TodoItem({ content, completed }: Todo) {
+interface Props extends Todo {
+  onToggleCompleted: (id: string) => void
+}
+
+export default function TodoItem({ content, completed, id, onToggleCompleted }: Props) {
   // const todoItemClassName = `
   // ${isChecked ? 'completed' : ''}
   // ${editingUuid === todoUuid ? 'editing' : ''}
@@ -7,11 +11,17 @@ export default function TodoItem({ content, completed }: Todo) {
   return (
     <li className="">
       <div className="view">
-        <input className="toggle" type="checkbox" />
+        <input
+          data-testid="todo-item-checkbox"
+          className="toggle"
+          type="checkbox"
+          checked={completed}
+          onChange={() => onToggleCompleted(id)}
+        />
         <label>{content}</label>
         <button className="destroy"></button>
       </div>
-      {/* <input className="edit" value="" /> */}
+      {/* <input className="edit" /> */}
     </li>
   )
 }

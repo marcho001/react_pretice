@@ -11,6 +11,17 @@ export default function Todos() {
   const addTodo = (todo: Todo) => {
     setTodos(todos => [...todos, todo])
   }
+
+  const toggleTodoCompleted = (id: string) => {
+    setTodos(
+      todos.map(item => {
+        if (item.id === id) {
+          item.completed = !item.completed
+        }
+        return item
+      })
+    )
+  }
   return (
     <div className="max-w-[580px] m-auto pt-32">
       <section className="todoapp">
@@ -20,7 +31,7 @@ export default function Todos() {
           <ToggleBtn />
           <ul className="todo-list">
             {todos.map(todo => (
-              <TodoItem key={todo.id} {...todo} />
+              <TodoItem key={todo.id} onToggleCompleted={toggleTodoCompleted} {...todo} />
             ))}
           </ul>
         </section>
