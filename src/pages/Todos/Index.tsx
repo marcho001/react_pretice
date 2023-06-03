@@ -7,14 +7,22 @@ import React, { useMemo, useState } from 'react'
 import { v4 as uuidv4 } from 'uuid'
 
 export default function Todos() {
+  const [todos, setTodos] = useState<Todo[]>([])
+  const addTodo = (todo: Todo) => {
+    setTodos(todos => [...todos, todo])
+  }
   return (
     <div className="max-w-[580px] m-auto pt-32">
       <section className="todoapp">
-        <Header />
+        <Header onSubmitTodo={addTodo} />
 
         <section className="main">
           <ToggleBtn />
-          <ul className="todo-list"></ul>
+          <ul className="todo-list">
+            {todos.map(todo => (
+              <TodoItem key={todo.id} {...todo} />
+            ))}
+          </ul>
         </section>
 
         <footer className="footer h-12">
