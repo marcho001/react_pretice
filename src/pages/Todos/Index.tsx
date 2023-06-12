@@ -25,6 +25,9 @@ export default function Todos() {
   const removeTodo = (id: string) => {
     setTodos(todos.filter(item => item.id !== id))
   }
+
+  const [editingUuid, setEditingUuid] = useState('')
+
   return (
     <div className="max-w-[580px] m-auto pt-32">
       <section className="todoapp">
@@ -36,9 +39,11 @@ export default function Todos() {
             {todos.map(todo => (
               <TodoItem
                 key={todo.id}
+                {...todo}
+                editingUuid={editingUuid}
                 onToggleCompleted={toggleTodoCompleted}
                 onRemoveTodo={removeTodo}
-                {...todo}
+                onEditing={id => setEditingUuid(id)}
               />
             ))}
           </ul>

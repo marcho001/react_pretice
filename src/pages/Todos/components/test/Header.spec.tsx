@@ -33,4 +33,15 @@ describe('type into input and submit', () => {
       expect(getByText('test')).toBeInTheDocument()
     })
   })
+  it('should not add todo when press enter with empty input', async () => {
+    const addTodo = jest.fn()
+    const { queryByPlaceholderText, queryByText } = render(<Header onSubmitTodo={addTodo} />)
+    const input = queryByPlaceholderText('What needs to be done?') as HTMLInputElement
+    input.value = ''
+    fireEvent.keyDown(input, { key: 'Enter', code: 'Enter' })
+    waitFor(() => {
+      expect(addTodo).not.toHaveBeenCalled()
+      expect(queryByText('test')).not.toBeInTheDocument()
+    })
+  })
 })

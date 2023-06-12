@@ -12,9 +12,10 @@ export default function Header({ onSubmitTodo }: Props) {
   }
   const handleSubmit = (e: React.KeyboardEvent) => {
     if (isComposing) return
+    if (todo.trim() === '') return
     if (e.key === 'Enter') {
       onSubmitTodo({
-        content: todo,
+        content: todo.trim(),
         completed: false,
         id: uuidv4()
       })
