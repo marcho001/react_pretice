@@ -28,6 +28,22 @@ export default function Todos() {
 
   const [editingUuid, setEditingUuid] = useState('')
 
+  const [editingContent, setEditingContent] = useState('')
+  const editTodoContent = (content: string) => {
+    setEditingContent(content)
+  }
+  const handleSubmitEditing = (id: string) => {
+    setTodos(
+      todos.map(item => {
+        if (item.id === id) {
+          item.content = editingContent
+        }
+        return item
+      })
+    )
+    setEditingContent('')
+    setEditingUuid('')
+  }
   return (
     <div className="max-w-[580px] m-auto pt-32">
       <section className="todoapp">
@@ -41,9 +57,12 @@ export default function Todos() {
                 key={todo.id}
                 {...todo}
                 editingUuid={editingUuid}
+                editingContent={editingContent}
                 onToggleCompleted={toggleTodoCompleted}
                 onRemoveTodo={removeTodo}
                 onEditing={id => setEditingUuid(id)}
+                onEditTodoContent={editTodoContent}
+                onSubmitEditing={handleSubmitEditing}
               />
             ))}
           </ul>
